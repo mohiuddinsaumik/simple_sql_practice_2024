@@ -1,0 +1,91 @@
+Its a case sensitive Language.
+
+C-----Create
+R-----Read
+U-----Update 
+D-----Delete
+
+..................CREATE........................................
+#create database
+#when I insert a data databse & tablw would created
+use company
+
+# see database
+show dbs
+
+#select database/switch database
+use company
+
+#insert data
+
+db.inventory.insertOne(
+... {
+... item:"pen",
+... qty:100,
+... tags :["HB"],  		// Using square brackets for consistency and clarity
+... size :{h:6,w:0.6,color:"Black"}
+... }
+... )
+In this document, size is an embedded document or subdocument
+with the structure { h: 7, w: 1.5, color: "Black" }.
+The size field contains key-value pairs, much like a dictionary in other programming languages.
+
+#insert Many datas
+db.inventory.insertMany(
+... [
+... {item:"pen",qty:100,tags:["stationary"],size:{h:7,w:0.4,measure:"inchi"}},
+... {item:"pencil",qty:150,tags:["stationary"],size:{h:6,w:0.5,measure:"inchi"}},
+... {item:"notebook",qty:50,tags:["stationary"],size:{h:0.5,w:4,l:7,measure:"inchi"}},
+... {item:"scal",qty:20,tags:["stationary"],size:{h:0.01,w:0.3,l:13,measure:"inchi"}},
+... {item:"eraser",qty:100,tags:["stationary"],size:{h:0.2,w:0.4,measure:"inchi"}}
+... ]
+... )
+
+
+......................READ..........................................
+
+# show tables 
+show collections
+
+
+#show all data from table //Fatch all documents
+#like select * from inventory
+
+db.tablename.find()
+db.inventory.find()
+db.inventory.find({})
+
+#specfic something
+employees> db.inventory.find({qty:100})
+
+
+#Less then 100			//ls = less then
+db.inventory.find({qty:{$lt:100}}) 
+
+
+#Grater then 100		//ls = less then
+db.inventory.find({qty:{$gt:100}})
+
+#Find by indivisual
+db.inventory.find({item:'pencil'})
+
+
+# Find by size h
+employees> db.inventory.find({"size.h":7})
+# Find
+db.inventory.find( {tags:{$in:["grosary"]}})
+
+
+ #Find datas from specfic tags/keyword
+db.inventory.find({tags: {$in:["food","green"]} } )
+
+
+# And Operator
+employees> db.inventory.find({ tags: "fresh", qty: { $gt: 80 } })
+
+
+# OR Operation
+db.inventory.find({ $or: [ { tags: "fresh" }, { qty: { $gt: 50 } } ] })
+
+.
+
