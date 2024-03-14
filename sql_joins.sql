@@ -88,3 +88,36 @@ FROM student AS a
 RIGHT JOIN course AS b ON a.id = b.id
 WHERE a.id IS NULL;
 
+#Left exclusive
+
+select * from student as a
+left join course as b
+on a.id = b.id
+where b.id is null;
+
+#Right exclusive
+select * from student as a
+right join course as b
+on a.id = b.id
+where a.id is null;
+
+create table employee(
+id int primary key,
+name varchar(50),
+manager_id int
+);
+
+insert into employee(id,name,manager_id)
+values
+(101,'adam',103),
+(102,'bob',104),
+(103,'cascy',null),
+(104,'donald',103);
+
+select name from employee
+union
+select name from employee;
+
+select name from employee
+union all
+select name from employee;
